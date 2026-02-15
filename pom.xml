@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>gl.rvrs</groupId>
-    <artifactId>kanga-interview</artifactId>
+    <artifactId>market-ranking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>kanga-interview</name>
-    <description>kanga-interview</description>
+    <name>market-ranking</name>
+    <description>market-ranking</description>
     <url/>
     <licenses>
         <license/>
