@@ -12,7 +12,7 @@
 ### Using jar
 * run in terminal
   * `mvn clean package`
-  * `java -jar <project-directory>/target/kanga-0.0.1-SNAPSHOT.jar`
+  * `java -jar <project-directory>/target/market-ranking-0.0.1-SNAPSHOT.jar`
 
 ## Test requests
 
