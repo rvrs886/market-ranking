@@ -2,6 +2,8 @@ package com.rvrs.config;
 
 import com.rvrs.application.MarketRankingPreparationService;
 import com.rvrs.application.MarketRankingService;
+import com.rvrs.application.strategy.MarketSpreadPreparationStrategy;
+import com.rvrs.application.strategy.MarketSpreadPreparationStrategyRegistry;
 import com.rvrs.client.SpreadDataApiClient;
 import com.rvrs.persistence.InMemoryMarketRankingRepository;
 import com.rvrs.persistence.MarketRankingRepository;
@@ -10,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
 
 @Configuration
 public class MarketRankingConfiguration {
@@ -46,8 +50,8 @@ public class MarketRankingConfiguration {
 	}
 
 	@Bean
-	MarketRankingPreparationService marketRankingPreparationService(SpreadDataApiClient spreadDataApiClient) {
-		return new MarketRankingPreparationService(spreadDataApiClient);
+	MarketRankingPreparationService marketRankingPreparationService(SpreadDataApiClient spreadDataApiClient, MarketSpreadPreparationStrategyRegistry registry) {
+		return new MarketRankingPreparationService(spreadDataApiClient, registry);
 	}
 
 	@Bean
@@ -55,6 +59,11 @@ public class MarketRankingConfiguration {
 	                                       SpreadDataApiClient spreadDataApiClient,
 	                                       MarketRankingPreparationService marketRankingPreparationService) {
 		return new MarketRankingService(marketRankingRepository, spreadDataApiClient, marketRankingPreparationService);
+	}
+
+	@Bean
+	MarketSpreadPreparationStrategyRegistry marketSpreadPreparationStrategyRegistry(List<MarketSpreadPreparationStrategy> strategies) {
+		return new MarketSpreadPreparationStrategyRegistry(strategies);
 	}
 
 }
