@@ -36,6 +36,9 @@ public class MarketRankingPreparationService {
 		Instant timestamp = Instant.now();
 		Map<String, List<MarketSpread>> groupWithSpreads = new ConcurrentHashMap<>();
 
+		marketSpreadPreparationStrategyRegistry.getAllGroupNames()
+				.forEach(group -> groupWithSpreads.putIfAbsent(group, Collections.synchronizedList(new ArrayList<>())));
+
 		List<CompletableFuture<Void>> threads = tickerIds.stream()
 				.map(tickerId -> CompletableFuture.runAsync(() -> {
 					OrderBookDto orderBookDto = spreadDataApiClient.getOrderBook(tickerId);
@@ -52,9 +55,7 @@ public class MarketRankingPreparationService {
 
 					MarketSpread marketSpread = strategy.prepare(marketQuote.market(), spread);
 
-					groupWithSpreads
-							.computeIfAbsent(groupName, _ -> Collections.synchronizedList(new ArrayList<>()))
-							.add(marketSpread);
+					groupWithSpreads.get(groupName).add(marketSpread);
 				}, executorService))
 				.toList();
 

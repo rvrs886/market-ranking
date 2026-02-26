@@ -17,4 +17,11 @@ public class MarketSpreadPreparationStrategyRegistry {
 				.findFirst()
 				.orElseThrow();
 	}
+
+	public List<String> getAllGroupNames() {
+		return strategies.stream()
+				.map(MarketSpreadPreparationStrategy::getGroupName)
+				.distinct()
+				.toList();
+	}
 }
