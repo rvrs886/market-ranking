@@ -3,7 +3,6 @@ package com.rvrs.application;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,11 +15,11 @@ class SpreadCalculatorTest {
 		BigDecimal bid = BigDecimal.valueOf(4.2610);
 
 		//when
-		Optional<BigDecimal> spread = SpreadCalculator.calculateSpread(bid, ask);
+		BigDecimal spread = SpreadCalculator.calculateSpread(bid, ask);
 
 		//then
-		assertThat(spread).isPresent();
-		assertThat(spread.get()).isEqualTo(BigDecimal.valueOf(7.64));
+		assertThat(spread).isNotNull();
+		assertThat(spread).isEqualTo(BigDecimal.valueOf(7.64));
 	}
 
 	@Test
@@ -30,10 +29,10 @@ class SpreadCalculatorTest {
 		BigDecimal bid = BigDecimal.valueOf(4.2610);
 
 		//when
-		Optional<BigDecimal> spread = SpreadCalculator.calculateSpread(ask, bid);
+		BigDecimal spread = SpreadCalculator.calculateSpread(ask, bid);
 
 		//then
-		assertThat(spread).isEmpty();
+		assertThat(spread).isNull();
 	}
 
 	@Test
@@ -43,10 +42,10 @@ class SpreadCalculatorTest {
 		BigDecimal bid = null;
 
 		//when
-		Optional<BigDecimal> spread = SpreadCalculator.calculateSpread(ask, bid);
+		BigDecimal spread = SpreadCalculator.calculateSpread(ask, bid);
 
 		//then
-		assertThat(spread).isEmpty();
+		assertThat(spread).isNull();
 	}
 
 	@Test
@@ -56,10 +55,10 @@ class SpreadCalculatorTest {
 		BigDecimal bid = null;
 
 		//when
-		Optional<BigDecimal> spread = SpreadCalculator.calculateSpread(ask, bid);
+		BigDecimal spread = SpreadCalculator.calculateSpread(ask, bid);
 
 		//then
-		assertThat(spread).isEmpty();
+		assertThat(spread).isNull();
 	}
 
 	@Test
@@ -69,9 +68,9 @@ class SpreadCalculatorTest {
 		BigDecimal bid = BigDecimal.ZERO;
 
 		//when
-		Optional<BigDecimal> spread = SpreadCalculator.calculateSpread(ask, bid);
+		BigDecimal spread = SpreadCalculator.calculateSpread(ask, bid);
 
 		//then
-		assertThat(spread).isEmpty();
+		assertThat(spread).isNull();
 	}
 }
